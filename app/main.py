@@ -1,9 +1,13 @@
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
 from app.agent import AgentReply, run_agent, search_jobs_tool
 from app.db import init_db
 
 app = FastAPI(title="CareerScout API")
+@app.get("/", include_in_schema=False)
+def root():
+    return RedirectResponse(url="/docs")
 
 class ChatRequest(BaseModel):
     session_id: str = "elip-prep"
